@@ -12,11 +12,9 @@
   (alter-var-root #'system (constantly (web-system {:router (new-router)
                                                     :port 3000}))))
 (defn start []
-  (alter-var-root #'system
-                  component/start))
+  (alter-var-root #'system component/start))
 (defn stop []
-  (alter-var-root #'system
-                  (fn [s] (when s (component/stop s)))))
+  (alter-var-root #'system (fn [s] (when s (component/stop s)))))
 (defn go []
   (init)
   (start))
