@@ -6,6 +6,6 @@
   :available-media-types ["text/html"]
   :handle-ok views/homepage)
 
-(defresource lines
+(defresource centrelines
   :available-media-types ["application/edn"]
   :handle-ok ["lines"])

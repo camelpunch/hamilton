@@ -9,7 +9,7 @@
 
 (def routes
   ["/" {"" :homepage
-        "lines" :lines}])
+        "centrelines" :centrelines}])
 
 (defn- missing-handler [] {:status 500})
 (defn- missing-route [] {:status 404})
@@ -24,7 +24,7 @@
 
 (defn handlers []
   {:homepage controllers/homepage
-   :lines controllers/lines})
+   :centrelines controllers/centrelines})
 
 (defn new-router [] (partial route (handlers)))
 

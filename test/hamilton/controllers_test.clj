@@ -18,14 +18,14 @@
                    controllers/homepage
                    :status)))))
 
-(deftest lines
+(deftest centrelines
   (testing "200 to GET as EDN"
     (is (= 200 (-> (request :get)
                    (header "Accept" "application/edn")
-                   controllers/lines
+                   controllers/centrelines
                    :status))))
   (testing "406 to GET as HTML"
     (is (= 406 (-> (request :get)
                    (header "Accept" "text/html")
-                   controllers/lines
+                   controllers/centrelines
                    :status)))))

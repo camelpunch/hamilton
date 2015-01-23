@@ -5,10 +5,10 @@
             [hamilton.core :refer :all]))
 
 (deftest routing
-  (testing "GET /lines calls the :lines handler with given params"
+  (testing "GET /centrelines calls the :centrelines handler with given params"
     (let [q-from-req (fn [req] {:body (get-in req [:params "q"])})
-          handlers {:lines q-from-req}
-          req (request :get "/lines?q=Shropshire+Union")
+          handlers {:centrelines q-from-req}
+          req (request :get "/centrelines?q=Shropshire+Union")
           res (route handlers req)]
       (is (= "Shropshire Union" (:body res)))))
 
@@ -21,6 +21,6 @@
 
   (testing "500 when route in place but handler not"
     (let [handlers {}
-          req (request :get "/lines")
+          req (request :get "/centrelines")
           res (route handlers req)]
       (is (= 500 (:status res))))))
