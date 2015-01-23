@@ -6,7 +6,7 @@
   component/Lifecycle
 
   (start [web-server]
-    (println "Starting Jetty")
+    (println "Starting Jetty on port" port)
     (let [jetty (run-jetty router
                            {:port (Integer. port)
                             :join? false})]
