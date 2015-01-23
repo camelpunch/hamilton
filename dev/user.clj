@@ -1,5 +1,5 @@
 (ns user
-  (:require [clojure.tools.namespace.repl :refer [refresh]]
+  (:require [clojure.tools.namespace.repl :refer [refresh clear]]
             [clojure.pprint :refer [pprint]]
             [clojure.test :as test]
             [clojure.repl :refer (apropos dir doc find-doc pst source)]
