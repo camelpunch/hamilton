@@ -1,18 +1,26 @@
 (ns hamilton.core-test
   (:require [clojure.test :refer :all]
             [clojure.edn :as edn]
+            [ring.mock.request :refer :all]
             [hamilton.core :refer :all]))
 
 (deftest routing
-  (testing "/lines calls the :lines handler with given params"
-    (let [handlers {:lines (fn [req] (:query-params req))}
-          sent-params (->> {:uri "/lines"
-                            :query-string "q=Shropshire Union"}
-                           (route handlers))]
-      (is (= "Shropshire Union" (sent-params "q")))))
+  (testing "GET /lines calls the :lines handler with given params"
+    (let [q-from-req (fn [req] {:body (get-in req [:params "q"])})
+          handlers {:lines q-from-req}
+          req (request :get "/lines?q=Shropshire+Union")
+          res (route handlers req)]
+      (is (= "Shropshire Union" (:body res)))))
 
   (testing "404 on non-existent route"
-    (let [response (route {}
-                          {:uri "/madeupplace"
-                           :query-string nil})]
-      (is (= 404 (:status response))))))
+    (let [handlers {}
+          req {:uri "/madeupplace"
+               :query-string nil}
+          res (route handlers req)]
+      (is (= 404 (:status res)))))
+
+  (testing "500 when route in place but handler not"
+    (let [handlers {}
+          req (request :get "/lines")
+          res (route handlers req)]
+      (is (= 500 (:status res))))))

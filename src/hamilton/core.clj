@@ -1,7 +1,8 @@
 (ns hamilton.core
   (:require [clojure.java.io :as io]
-            [ring.middleware.params :refer [params-request]]
+            [ring.middleware.params :refer [wrap-params]]
             [bidi.bidi :refer [match-route]]
+            [liberator.core :refer [resource defresource]]
             [com.stuartsierra.component :as component]
             [hamilton.system :refer [web-system]]
             [hamilton.controllers :as controllers])
@@ -12,18 +13,16 @@
         "lines" :lines}])
 
 (defn route [handlers request]
-  (let [match (match-route routes
-                           (:uri request)
-                           :request-method (:request-method request))
-        key (:handler match)]
-    (if-let [key (:handler match)]
-      (let [handler (key handlers)]
-        (handler (params-request request)))
+  (let [match (match-route routes (:uri request))]
+    (if-let [handler-key (:handler match)]
+      (if-let [handler (handler-key handlers)]
+        ((wrap-params handler) request)
+        {:status 500})
       {:status 404})))
 
 (defn handlers []
-  {:homepage controllers/homepage
-   :lines controllers/lines})
+  {:homepage (resource)
+   :lines (resource)})
 
 (defn new-router [] (partial route (handlers)))
 
