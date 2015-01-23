@@ -1,11 +1,11 @@
 (ns user
-  (require [clojure.tools.namespace.repl :refer [refresh]]
-           [clojure.test :as test]
-           [clojure.repl :refer (apropos dir doc find-doc pst source)]
-           [hamilton.core-test :as hct]
-           [hamilton.core :refer [new-router]]
-           [hamilton.system :refer [web-system]]
-           [com.stuartsierra.component :as component]))
+  (:require [clojure.tools.namespace.repl :refer [refresh]]
+            [clojure.test :as test]
+            [clojure.repl :refer (apropos dir doc find-doc pst source)]
+            [hamilton.core-test :as hct]
+            [hamilton.core :refer [new-router]]
+            [hamilton.system :refer [web-system]]
+            [com.stuartsierra.component :as component]))
 
 (def system nil)
 (defn init []
