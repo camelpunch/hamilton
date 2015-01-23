@@ -6,5 +6,6 @@
   :available-media-types ["text/html"]
   :handle-ok views/homepage)
 
-(defn lines [req]
-  {:body "Lines"})
+(defresource lines
+  :available-media-types ["application/edn"]
+  :handle-ok ["lines"])
