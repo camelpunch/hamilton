@@ -9,4 +9,10 @@
           sent-params (->> {:uri "/lines"
                             :query-string "q=Shropshire Union"}
                            (route handlers))]
-      (is (= "Shropshire Union" (sent-params "q"))))))
+      (is (= "Shropshire Union" (sent-params "q")))))
+
+  (testing "404 on non-existent route"
+    (let [response (route {}
+                          {:uri "/madeupplace"
+                           :query-string nil})]
+      (is (= 404 (:status response))))))

@@ -3,26 +3,29 @@
             [ring.middleware.params :refer [params-request]]
             [bidi.bidi :refer [match-route]]
             [com.stuartsierra.component :as component]
-            [hamilton.system :refer [web-system]])
+            [hamilton.system :refer [web-system]]
+            [hamilton.controllers :as controllers])
   (:gen-class))
 
 (def routes
-  ["/" {"lines" :lines}])
+  ["/" {"" :homepage
+        "lines" :lines}])
 
 (defn route [handlers request]
   (let [match (match-route routes
                            (:uri request)
                            :request-method (:request-method request))
-        key (:handler match)
-        handler (key handlers)]
-    (handler (params-request request))))
+        key (:handler match)]
+    (if-let [key (:handler match)]
+      (let [handler (key handlers)]
+        (handler (params-request request)))
+      {:status 404})))
 
-(defn lines [query] {:body "[]"})
+(defn handlers []
+  {:homepage controllers/homepage
+   :lines controllers/lines})
 
-(def handlers
-  {:lines lines})
-
-(defn new-router [] (partial route handlers))
+(defn new-router [] (partial route (handlers)))
 
 (defn -main []
   (component/start (web-system {:router (new-router)
