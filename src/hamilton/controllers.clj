@@ -1,11 +1,13 @@
 (ns hamilton.controllers
-  (:require [liberator.core :refer [defresource]]
+  (:require [liberator.core :refer [resource]]
             [hamilton.views :as views]))
 
-(defresource homepage
-  :available-media-types ["text/html"]
-  :handle-ok views/homepage)
+(defn homepage []
+  (resource
+   :available-media-types ["text/html"]
+   :handle-ok views/homepage))
 
-(defresource centrelines
-  :available-media-types ["application/edn"]
-  :handle-ok ["lines"])
+(defn centrelines []
+  (resource
+   :available-media-types ["application/edn"]
+   :handle-ok ["lines"]))

@@ -23,8 +23,8 @@
       (missing-route))))
 
 (defn handlers []
-  {:homepage controllers/homepage
-   :centrelines controllers/centrelines})
+  {:homepage (controllers/homepage)
+   :centrelines (controllers/centrelines)})
 
 (defn new-router [] (partial route (handlers)))
 

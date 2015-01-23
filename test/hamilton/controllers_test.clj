@@ -6,26 +6,28 @@
 (defn request [method] (mock/request method "/irrelevant-path"))
 
 (deftest home
-  (testing "responds to GET as HTML"
-    (is (= "<!DOCTYPE html>" (-> (request :get)
-                                 (header "Accept" "text/html")
-                                 controllers/homepage
-                                 :body
-                                 (clojure.string/split #"\n")
-                                 first))))
-  (testing "405s for POST"
-    (is (= 405 (-> (request :post)
-                   controllers/homepage
-                   :status)))))
+  (let [page (controllers/homepage)]
+    (testing "responds to GET as HTML"
+      (is (= "<!DOCTYPE html>" (-> (request :get)
+                                   (header "Accept" "text/html")
+                                   page
+                                   :body
+                                   (clojure.string/split #"\n")
+                                   first))))
+    (testing "405s for POST"
+      (is (= 405 (-> (request :post)
+                     page
+                     :status))))))
 
 (deftest centrelines
-  (testing "200 to GET as EDN"
-    (is (= 200 (-> (request :get)
-                   (header "Accept" "application/edn")
-                   controllers/centrelines
-                   :status))))
-  (testing "406 to GET as HTML"
-    (is (= 406 (-> (request :get)
-                   (header "Accept" "text/html")
-                   controllers/centrelines
-                   :status)))))
+  (let [page (controllers/centrelines)]
+    (testing "200 to GET as EDN"
+      (is (= 200 (-> (request :get)
+                     (header "Accept" "application/edn")
+                     page
+                     :status))))
+    (testing "406 to GET as HTML"
+      (is (= 406 (-> (request :get)
+                     (header "Accept" "text/html")
+                     page
+                     :status))))))
