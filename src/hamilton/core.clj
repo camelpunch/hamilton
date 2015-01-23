@@ -2,7 +2,6 @@
   (:require [clojure.java.io :as io]
             [ring.middleware.params :refer [wrap-params]]
             [bidi.bidi :refer [match-route]]
-            [liberator.core :refer [resource defresource]]
             [com.stuartsierra.component :as component]
             [hamilton.system :refer [web-system]]
             [hamilton.controllers :as controllers])
@@ -12,17 +11,20 @@
   ["/" {"" :homepage
         "lines" :lines}])
 
+(defn- missing-handler [] {:status 500})
+(defn- missing-route [] {:status 404})
+
 (defn route [handlers request]
   (let [match (match-route routes (:uri request))]
     (if-let [handler-key (:handler match)]
       (if-let [handler (handler-key handlers)]
         ((wrap-params handler) request)
-        {:status 500})
-      {:status 404})))
+        (missing-handler))
+      (missing-route))))
 
 (defn handlers []
-  {:homepage (resource)
-   :lines (resource)})
+  {:homepage controllers/homepage
+   :lines controllers/lines})
 
 (defn new-router [] (partial route (handlers)))
 

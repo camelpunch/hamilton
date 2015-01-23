@@ -23,7 +23,7 @@
   (stop)
   (refresh :after 'user/go))
 (defn- run-tests-and-go []
-  (test/run-tests 'hamilton.core-test)
+  (test/run-tests 'hamilton.core-test 'hamilton.controllers-test)
   (go))
 (defn t []
   (stop)

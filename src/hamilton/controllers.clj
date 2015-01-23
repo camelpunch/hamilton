@@ -1,7 +1,10 @@
-(ns hamilton.controllers)
+(ns hamilton.controllers
+  (:require [liberator.core :refer [defresource]]
+            [hamilton.views :as views]))
 
-(defn homepage [params]
-  {:body "Hello!"})
+(defresource homepage
+  :available-media-types ["text/html"]
+  :handle-ok views/homepage)
 
-(defn lines [params]
+(defn lines [req]
   {:body "Lines"})
