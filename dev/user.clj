@@ -1,5 +1,6 @@
 (ns user
   (:require [clojure.tools.namespace.repl :refer [refresh]]
+            [clojure.pprint :refer [pprint]]
             [clojure.test :as test]
             [clojure.repl :refer (apropos dir doc find-doc pst source)]
             [hamilton.core-test :as hct]
@@ -21,7 +22,9 @@
 (defn reset []
   (stop)
   (refresh :after 'user/go))
-(defn- run-tests []
-  (test/run-tests 'hamilton.core-test))
+(defn- run-tests-and-go []
+  (test/run-tests 'hamilton.core-test)
+  (go))
 (defn t []
-  (refresh :after 'user/run-tests))
+  (stop)
+  (refresh :after 'user/run-tests-and-go))
