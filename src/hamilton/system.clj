@@ -14,8 +14,7 @@
 
   (stop [web-server]
     (println "Stopping Jetty")
-    (when (:running-server web-server) (.stop (:running-server web-server)))
-    (assoc web-server :running-server nil)))
+    (when (:running-server web-server) (.stop (:running-server web-server)))))
 
 (defn new-web-server [router port]
   (map->WebServer {:router router :port port}))
