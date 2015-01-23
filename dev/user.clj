@@ -23,6 +23,7 @@
 (defn reset []
   (stop)
   (refresh :after 'user/go))
-(defn t []
-  (refresh)
+(defn- run-tests []
   (test/run-tests 'hamilton.core-test))
+(defn t []
+  (refresh :after 'user/run-tests))
