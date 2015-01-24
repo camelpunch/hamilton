@@ -7,7 +7,14 @@
    :available-media-types ["text/html"]
    :handle-ok views/homepage))
 
-(defn centrelines [db]
+(defn centrelines [parse-fn]
   (resource
    :available-media-types ["application/edn"]
-   :handle-ok ["lines"]))
+   :exists? (fn [ctx]
+              (let [waterway (get-in (:request ctx)
+                                     [:query-params "q"])
+                    sections (parse-fn waterway)]
+                (if-not (empty? sections)
+                  {:sections sections})))
+   :handle-ok (fn [ctx]
+                (apply concat (:sections ctx)))))

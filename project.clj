@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [bidi "1.12.0"]
                  [liberator "0.12.2"]
+                 [org.clojure/data.zip "0.1.1"]
                  [ring/ring-jetty-adapter "1.3.2"]
                  [com.stuartsierra/component "0.2.2"]]
   :profiles {:dev {:source-paths ["dev"]
