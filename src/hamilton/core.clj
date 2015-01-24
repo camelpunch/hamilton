@@ -1,5 +1,7 @@
 (ns hamilton.core
   (:require [clojure.java.io :as io]
+            [clojure.zip :as zip]
+            [clojure.xml :as xml]
             [ring.middleware.params :refer [wrap-params]]
             [bidi.bidi :refer [match-route]]
             [com.stuartsierra.component :as component]
@@ -22,12 +24,13 @@
         (missing-handler))
       (missing-route))))
 
-(defn handlers []
+(defn handlers [centrelines-db]
   {:homepage (controllers/homepage)
-   :centrelines (controllers/centrelines)})
+   :centrelines (controllers/centrelines centrelines-db)})
 
-(defn new-router [] (partial route (handlers)))
-
+(defn- centreline-zip []
+  (-> "Canal_Centreline.gml" io/file xml/parse zip/xml-zip))
+(defn new-router [] (partial route (handlers (centreline-zip))))
 (defn -main []
   (component/start (web-system {:router (new-router)
                                 :port (or (System/getenv "PORT") 3000)})))

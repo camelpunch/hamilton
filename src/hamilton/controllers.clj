@@ -7,7 +7,7 @@
    :available-media-types ["text/html"]
    :handle-ok views/homepage))
 
-(defn centrelines []
+(defn centrelines [db]
   (resource
    :available-media-types ["application/edn"]
    :handle-ok ["lines"]))

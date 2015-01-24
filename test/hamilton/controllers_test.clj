@@ -20,7 +20,7 @@
                      :status))))))
 
 (deftest centrelines
-  (let [page (controllers/centrelines)]
+  (let [page (controllers/centrelines [])]
     (testing "200 to GET as EDN"
       (is (= 200 (-> (request :get)
                      (header "Accept" "application/edn")
