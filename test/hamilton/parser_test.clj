@@ -36,12 +36,14 @@ xsi:schemaLocation='http://www.safe.com/gml2 Canal_Centreline.xsd'>"
     (zip-xml-string (str header body footer))))
 
 (deftest sections
-  (testing "retrieval of a waterway's centreline"
-    (let [db (gml-fixture [["Tees Navigation" "1,2 3,4"]
-                           ["River Soar Navigation" "45,67 89,10"]
-                           ["Tees Navigation" "5,6 7,8"]])]
-      (is (= [[["1" "2"]
-               ["3" "4"]]
-              [["5" "6"]
-               ["7" "8"]]]
-             (parser/sections db "Tees Navigation"))))))
+  (testing "sanity of retrieval of a waterway's centreline"
+    (let [db (gml-fixture [["Tees Navigation" "1,2"]
+                           ["River Soar Navigation" "45,67"]
+                           ["Tees Navigation" "5,6 7,8"]])
+          sections (parser/sections db "Tees Navigation")
+          first-latlng (ffirst sections)]
+      (is (= 2 (count sections)))
+      (is (> (:lat first-latlng) 49))
+      (is (< (:lat first-latlng) 50))
+      (is (> (:lng first-latlng) -8))
+      (is (< (:lng first-latlng) -7)))))
