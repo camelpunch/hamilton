@@ -21,5 +21,5 @@
      :lng (.getLng latlng)}))
 
 (defn sections [db waterway]
-  (let [sections (map parse-coords (centrelines db waterway))]
-    (map (partial map os2latlng) sections)))
+  (let [input-sections (map parse-coords (centrelines db waterway))]
+    (map (partial map os2latlng) input-sections)))
