@@ -21,9 +21,7 @@
     (map (fn [pairs] (map split-comma pairs)) comma-sep)))
 
 (defn- os2latlng [x y]
-  (let [float-x (Float. x)
-        float-y (Float. y)
-        osref (OSRef. float-x float-y)
+  (let [osref (OSRef. (Float. x) (Float. y))
         latlng (doto (.toLatLng osref) .toWGS84)]
     {:lat (.getLat latlng)
      :lng (.getLng latlng)}))
