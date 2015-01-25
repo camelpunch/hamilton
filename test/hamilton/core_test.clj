@@ -1,6 +1,5 @@
 (ns hamilton.core-test
   (:require [clojure.test :refer :all]
-            [clojure.edn :as edn]
             [ring.mock.request :refer :all]
             [hamilton.core :refer :all]))
 

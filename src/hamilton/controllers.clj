@@ -9,7 +9,7 @@
 
 (defn centrelines [parse-fn]
   (resource
-   :available-media-types ["application/edn"]
+   :available-media-types ["application/json"]
    :exists? (fn [ctx]
               (let [waterway (get-in (:request ctx)
                                      [:query-params "q"])
