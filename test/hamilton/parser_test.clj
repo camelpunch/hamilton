@@ -43,6 +43,8 @@ xsi:schemaLocation='http://www.safe.com/gml2 Canal_Centreline.xsd'>"
           sections (parser/sections db "Tees Navigation")
           first-latlng (ffirst sections)]
       (is (= 2 (count sections)))
+      (is (= 1 (count (first sections))))
+      (is (= 2 (count (second sections))))
       (is (> (:lat first-latlng) 49))
       (is (< (:lat first-latlng) 50))
       (is (> (:lng first-latlng) -8))
