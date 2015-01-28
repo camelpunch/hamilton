@@ -35,9 +35,9 @@
                 (header "Accept" "application/json"))]
     (testing "responds with 200"
       (is (= 200 (-> req handler :status))))
-    (testing "body contains concatenated coords"
-      (is (= [["456" "789"]
-              ["101" "121"]
-              ["314" "151"]]
+    (testing "body contains sectioned coords"
+      (is (= [[["456" "789"]
+               ["101" "121"]]
+              [["314" "151"]]]
              (-> req handler :body json/read-str))
           (-> req handler :body)))))

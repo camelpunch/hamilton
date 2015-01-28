@@ -16,5 +16,4 @@
                     sections (parse-fn waterway)]
                 (if-not (empty? sections)
                   {:sections sections})))
-   :handle-ok (fn [ctx]
-                (apply concat (:sections ctx)))))
+   :handle-ok (fn [ctx] (:sections ctx))))
