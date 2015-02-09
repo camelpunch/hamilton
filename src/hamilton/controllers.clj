@@ -17,3 +17,8 @@
                 (if-not (empty? sections)
                   {:sections sections})))
    :handle-ok (fn [ctx] (:sections ctx))))
+
+(defn json-pass-thru [f]
+  (resource
+   :available-media-types ["application/json"]
+   :handle-ok (f)))

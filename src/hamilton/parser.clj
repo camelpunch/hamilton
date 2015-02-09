@@ -23,3 +23,8 @@
 (defn sections [db waterway]
   (let [input-sections (map parse-coords (centrelines db waterway))]
     (map (partial map os2latlng) input-sections)))
+
+(defn waterways [db]
+  ["Leeds & Liverpool Canal"
+   "River Soar Navigation"
+   "Tees Navigation"])

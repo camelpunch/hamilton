@@ -21,8 +21,9 @@
     missing-handler))
 
 (def routes
-  ["/" {"" :homepage
-        "centrelines" :centrelines}])
+  ["/" {""            :homepage
+        "centrelines" :centrelines
+        "waterways"   :waterways}])
 
 (defn route [handlers req]
   (let [match (match-route routes (:uri req))]
@@ -31,9 +32,11 @@
       missing-route)))
 
 (defn- handlers [centrelines-db]
-  {:homepage (controllers/homepage)
+  {:homepage    (controllers/homepage)
    :centrelines (controllers/centrelines
-                 (partial parser/sections centrelines-db))})
+                 (partial parser/sections centrelines-db))
+   :waterways   (controllers/json-pass-thru
+                 (fn [] (parser/waterways centrelines-db)))})
 
 (defn new-router [] (partial route (handlers centreline-zip)))
 (defn -main []

@@ -41,3 +41,12 @@
               [["314" "151"]]]
              (-> req handler :body json/read-str))
           (-> req handler :body)))))
+
+(deftest json-pass-thru
+  (let [f (fn [] "return val")
+        handler (controllers/json-pass-thru f)
+        req (-> (mock/request :get "/doesntmatter"))]
+    (testing "responds with 200"
+      (is (= 200 (-> req handler :status))))
+    (testing "passes the function return value through"
+      (is (= "return val" (-> req handler :body))))))

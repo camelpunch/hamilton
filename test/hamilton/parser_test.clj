@@ -49,3 +49,13 @@ xsi:schemaLocation='http://www.safe.com/gml2 Canal_Centreline.xsd'>"
       (is (< (:lat first-latlng) 50))
       (is (> (:lng first-latlng) -8))
       (is (< (:lng first-latlng) -7)))))
+
+(deftest waterways
+  (testing "retrieval of all waterway names"
+    (let [db (gml-fixture [["Leeds &amp; Liverpool Canal", "0,0"]
+                           ["Tees Navigation", "0,0"]
+                           ["River Soar Navigation", "0,0"]])
+          waterways (parser/waterways db)]
+      (is (= ["Leeds & Liverpool Canal"
+              "River Soar Navigation"
+              "Tees Navigation"] waterways)))))
