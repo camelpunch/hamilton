@@ -16,4 +16,4 @@
                    :dependencies [[org.clojure/tools.namespace "0.2.8"]
                                   [org.clojure/tools.nrepl "0.2.7"]
                                   [ring/ring-mock "0.2.0"]]
-                   :plugins [[cider/cider-nrepl "0.8.1"]]}})
+                   :plugins [[cider/cider-nrepl "0.8.2"]]}})
