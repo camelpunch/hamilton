@@ -1,7 +1,7 @@
 (ns hamilton.parser
-  (:import [uk.me.jstott.jcoord OSRef])
   (:require [clojure.data.zip.xml :refer [xml-> text= text]]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [ordinance :refer [os2latlng]]))
 
 (defn- centrelines [db waterway]
   (xml-> db
@@ -13,12 +13,6 @@
 
 (defn- parse-coords [s]
   (map next (re-seq #"([\d.-]+),([\d.-]+)" s)))
-
-(defn- os2latlng [[x y]]
-  (let [osref (OSRef. (Float. x) (Float. y))
-        latlng (doto (.toLatLng osref) .toWGS84)]
-    {:lat (.getLat latlng)
-     :lng (.getLng latlng)}))
 
 (defn sections [db waterway]
   (let [input-sections (map parse-coords (centrelines db waterway))]

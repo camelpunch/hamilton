@@ -8,6 +8,7 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [bidi "1.12.0"]
                  [liberator "0.12.2"]
+                 [org.clojars.camelpunch/ordinance "0.1.0"]
                  [org.clojure/data.zip "0.1.1"]
                  [ring/ring-jetty-adapter "1.3.2"]
                  [uk.me.jstott/jcoord "1.0"]
